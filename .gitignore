@@ -42,3 +42,5 @@ ipython_config.py
 
 # Project Misc ================================================================
 
+# Ignore prototype output files
+prototypes/output
