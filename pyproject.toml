@@ -1,0 +1,16 @@
+[project]
+name = "scjn-transcripts"
+version = "0.0.0"
+description = "Este repositorio almacena el código y los recursos necesarios para la extracción, limpieza y estandarización de las transcripciones estenográficas de las sesiones de la Suprema Corte de Justicia de la Nación (SCJN)."
+authors = [
+    {name = "Pablo Reyes",email = "pablo.reyes.moctezuma@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
