@@ -9,7 +9,7 @@ timeout 0
 tcp-keepalive 300
 
 # Security settings
-requirepass 9b14K8AeCGtQbqdGqJwGcbsy
+requirepass password
 
 # Logging
 loglevel notice
