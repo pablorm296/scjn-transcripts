@@ -1,9 +1,9 @@
 from pydantic import BaseModel, Field
 from typing import Annotated
 
-from scjn_transcripts.models.extractor.transcription.meta import TranscriptionMetadata
-from scjn_transcripts.models.extractor.entity_count import EntityCount
-from scjn_transcripts.models.extractor.id import Id
+from scjn_transcripts.models.collector.transcription.meta import TranscriptionMetadata
+from scjn_transcripts.models.collector.entity_count import EntityCount
+from scjn_transcripts.models.collector.id import Id
 
 class BúsquedaResponse(BaseModel):
     total: int

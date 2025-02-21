@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Annotated
 
-from scjn_transcripts.models.extractor.transcription.organo_jurisdiccional import OrganoJurisdiccionalEnum
+from scjn_transcripts.models.collector.transcription.organo_jurisdiccional import OrganoJurisdiccionalEnum
 
 class TranscriptionMetadata(BaseModel):
     organo_jurisdiccional: Annotated[OrganoJurisdiccionalEnum, Field(alias = "organoJurisdiccional")]

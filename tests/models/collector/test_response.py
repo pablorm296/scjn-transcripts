@@ -2,7 +2,7 @@ from pydantic import ValidationError
 from pytest import fixture, raises
 import json
 
-from scjn_transcripts.models.extractor.response import BúsquedaResponse
+from scjn_transcripts.models.collector.response import BúsquedaResponse
 
 @fixture
 def búsqueda_test_data():
