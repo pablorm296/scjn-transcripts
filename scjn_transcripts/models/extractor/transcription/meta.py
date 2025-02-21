@@ -4,7 +4,7 @@ from typing import Annotated
 from scjn_transcripts.models.extractor.transcription.organo_jurisdiccional import OrganoJurisdiccionalEnum
 
 class TranscriptionMetadata(BaseModel):
-    organo_jurisdiccional: OrganoJurisdiccionalEnum
+    organo_jurisdiccional: Annotated[OrganoJurisdiccionalEnum, Field(alias = "organoJurisdiccional")]
     instancia: str = "Suprema Corte de Justicia de la Nación"
     pos: int
     id_vt: Annotated[str, Field(alias = "idVT")]
