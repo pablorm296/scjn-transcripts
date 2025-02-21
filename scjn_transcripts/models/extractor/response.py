@@ -14,5 +14,5 @@ class BúsquedaResponse(BaseModel):
     pagina: int
     size: int
     skip: Annotated[int, Field(alias = "from")]
-    to: int
+    to: Annotated[int, Field(alias = "fromTo")]
     qTranslate: str
