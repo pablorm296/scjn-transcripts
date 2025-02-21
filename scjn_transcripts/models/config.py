@@ -8,7 +8,8 @@ class CollectorConfig(BaseSettings):
 
     # Model configuration
     model_config = SettingsConfigDict(
-        env_prefix = "EXTRACTOR_"
+        env_prefix = "EXTRACTOR_",
+        env_file = ".env.local"
     )
 
 class Config(BaseSettings):
