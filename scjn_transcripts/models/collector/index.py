@@ -1,6 +1,6 @@
 from enum import Enum
 
-class IndexEnum(Enum):
+class IndexEnum(str, Enum):
     vtaquigraficas = "vtaquigraficas"
     sentencias_pub = "sentencias_pub"
     votos = "votos"
