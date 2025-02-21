@@ -30,14 +30,13 @@ class BuscadorJurídicoApiClient:
             "Referer": self.host
         })
 
-    def get_búsqueda(self, query: str, index: IndexEnum, page: int = 1, size: int = 10, ids: bool = True):
+    def get_búsqueda(self, query: str, index: IndexEnum, page: int = 1, size: int = 10):
         
         request_params = {
             "q": query,
             "indice": index,
             "pagina": page,
             "size": size,
-            "ids": ids
         }
 
         response = self.session.get(
