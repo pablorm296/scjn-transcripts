@@ -8,7 +8,7 @@ class IndexEnum(Enum):
     acuerdos = "acuerdos"
     protocolos_actuacion_dh = "protocolos_actuacion_dh"
     suniversal = "suniversal"
-    bdjh_coidh = "bdjh_coidh"
+    bjdh_coidh = "bjdh_coidh"
     cidh = "cidh"
     hudoc = "hudoc"
     legislacion = "legislacion"
