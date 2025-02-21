@@ -1,6 +1,6 @@
 from enum import Enum
 
 class OrganoJurisdiccionalEnum(Enum):
-    Pleno = "pleno"
+    Pleno = "Pleno"
     PrimeraSala = "Primera Sala"
     SegundaSala = "Segunda Sala"
