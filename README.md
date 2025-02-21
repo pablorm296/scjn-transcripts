@@ -27,6 +27,7 @@ En el archivo `.env.example` se encuentran las variables de entorno necesarias p
 
 ```bash
 # Archivo .env.example
+
 EXTRACTOR_HOST="https://bj.scjn.gob.mx"             # Host de la API del buscador de la SCJN.
 EXTRACTOR_PATH_SEARCH="/api/buscador/busqueda"      # Ruta del endpoint de búsqueda.
 ```
