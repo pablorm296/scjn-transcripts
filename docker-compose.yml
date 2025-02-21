@@ -3,7 +3,7 @@ services:
     db:
         image: mongo:latest
         env_file:
-            - mongo/.env
+            - .env.local
         ports:
             - "27017:27017"
         volumes:
