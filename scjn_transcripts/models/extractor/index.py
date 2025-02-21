@@ -1,0 +1,22 @@
+from enum import Enum
+
+class IndexEnum(Enum):
+    vtaquigraficas = "vtaquigraficas"
+    sentencias_pub = "sentencias_pub"
+    votos = "votos"
+    tesis = "tesis"
+    acuerdos = "acuerdos"
+    protocolos_actuacion_dh = "protocolos_actuacion_dh"
+    suniversal = "suniversal"
+    bdjh_coidh = "bdjh_coidh"
+    cidh = "cidh"
+    hudoc = "hudoc"
+    legislacion = "legislacion"
+    biblioteca = "biblioteca"
+    cij = "cij"
+    tcespanol = "tcespanol"
+    cccolombia = "cccolombia"
+    tcchile = "tcchile"
+    csjnargentina = "csjnargentina"
+    ccj_cursos = "ccj_cursos"
+    telectoral = "telectoral"
