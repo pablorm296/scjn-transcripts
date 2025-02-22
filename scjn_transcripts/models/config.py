@@ -44,6 +44,7 @@ class CollectorConfig(BaseSettings):
 class Config(BaseSettings):
     collector: CollectorConfig = CollectorConfig()
     mongo: MongoConfig = MongoConfig()
+    cache: CacheConfig = CacheConfig()
 
     model_config = SettingsConfigDict(
         extra = "ignore"
