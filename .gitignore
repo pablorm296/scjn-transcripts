@@ -49,5 +49,9 @@ prototypes/output
 .env.local
 
 # Local infrastructure ========================================================
+
 # Ignore mongo data volume
 docker/mongo/data
+
+# Ignore mongo init scripts
+docker/mongo/scripts
