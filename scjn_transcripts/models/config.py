@@ -7,7 +7,7 @@ class CacheConfig(BaseSettings):
     password: str
 
     # Cache configuration
-    cache_config = SettingsConfigDict(
+    model_config = SettingsConfigDict(
         env_prefix = "CACHE_",
         env_file = ".env.local"
     )
