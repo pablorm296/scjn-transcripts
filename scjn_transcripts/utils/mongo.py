@@ -2,13 +2,13 @@ from pymongo import AsyncMongoClient
 from scjn_transcripts.config import CONFIG
 
 class MongoClientFactory:
-    
+
+    @staticmethod
+    def build_connection_string():
+        return f"mongodb://{CONFIG.mongo.user}:{CONFIG.mongo.password}@{CONFIG.mongo.host}:{CONFIG.mongo.port}/{CONFIG.mongo.database}"
+
     @staticmethod
     async def create():
-        return AsyncMongoClient(
-            host = CONFIG.mongo.host,
-            port = CONFIG.mongo.port,
-            username = CONFIG.mongo.user,
-            password = CONFIG.mongo.password,
-            database = CONFIG.mongo.database
-        )
+        mongo_uri = MongoClientFactory.build_connection_string()
+
+        return AsyncMongoClient(mongo_uri)
