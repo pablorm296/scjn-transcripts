@@ -1,5 +1,17 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+class CacheConfig(BaseSettings):
+    # Redis host, port, and password
+    host: str
+    port: int
+    password: str
+
+    # Cache configuration
+    cache_config = SettingsConfigDict(
+        env_prefix = "CACHE_",
+        env_file = ".env.local"
+    )
+
 class MongoConfig(BaseSettings):
     # MongoDB host, port, user, password, and database
     host: str
