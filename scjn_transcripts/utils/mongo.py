@@ -5,7 +5,7 @@ class MongoClientFactory:
 
     @staticmethod
     def build_connection_string():
-        return f"mongodb://{CONFIG.mongo.user}:{CONFIG.mongo.password}@{CONFIG.mongo.host}:{CONFIG.mongo.port}/{CONFIG.mongo.database}"
+        return f"mongodb://{CONFIG.mongo.user}:{CONFIG.mongo.password}@{CONFIG.mongo.host}:{CONFIG.mongo.port}"
 
     @staticmethod
     async def create():
