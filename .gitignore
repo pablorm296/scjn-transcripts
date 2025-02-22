@@ -47,3 +47,7 @@ prototypes/output
 
 # Ignore local environment files
 .env.local
+
+# Local infrastructure ========================================================
+# Ignore mongo data volume
+docker/mongo/data
