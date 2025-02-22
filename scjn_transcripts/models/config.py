@@ -1,5 +1,19 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+class MongoConfig(BaseSettings):
+    # MongoDB host, port, user, password, and database
+    host: str
+    port: int
+    user: str
+    password: str
+    database: str
+
+    # Model configuration
+    model_config = SettingsConfigDict(
+        env_prefix = "MONGO_",
+        env_file = ".env.local"
+    )
+
 class CollectorConfig(BaseSettings):
     # Host of the Buscador Jurídico API
     host: str
@@ -14,3 +28,4 @@ class CollectorConfig(BaseSettings):
 
 class Config(BaseSettings):
     extractor: CollectorConfig = CollectorConfig()
+    mongo: MongoConfig = MongoConfig()
