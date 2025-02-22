@@ -21,5 +21,10 @@ db.createUser({
             role: 'readWriteAnyDatabase',
             db: 'admin',
         },
+        // Permission to drop the test_db database
+        {
+            role: "dbOwner",
+            db: "test_db"
+        }
     ],
 });
