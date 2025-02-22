@@ -55,3 +55,6 @@ docker/**/data
 
 # Ignore mongo init scripts
 docker/mongo/scripts/init.js
+
+# Ignore redis config
+docker/redis/redis.conf
