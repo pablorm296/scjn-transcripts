@@ -9,7 +9,8 @@ class CacheConfig(BaseSettings):
     # Cache configuration
     model_config = SettingsConfigDict(
         env_prefix = "CACHE_",
-        env_file = ".env.local"
+        env_file = ".env.local",
+        extra = "ignore"
     )
 
 class MongoConfig(BaseSettings):
@@ -23,7 +24,8 @@ class MongoConfig(BaseSettings):
     # Model configuration
     model_config = SettingsConfigDict(
         env_prefix = "MONGO_",
-        env_file = ".env.local"
+        env_file = ".env.local",
+        extra = "ignore"
     )
 
 class CollectorConfig(BaseSettings):
