@@ -1,4 +1,5 @@
 from pymongo import AsyncMongoClient
+
 from scjn_transcripts.config import CONFIG
 
 class MongoClientFactory:
