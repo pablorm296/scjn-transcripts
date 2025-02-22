@@ -50,8 +50,8 @@ prototypes/output
 
 # Local infrastructure ========================================================
 
-# Ignore mongo data volume
-docker/mongo/data
+# Ignore data volumes
+docker/**/data
 
 # Ignore mongo init scripts
-docker/mongo/scripts
+docker/mongo/scripts/init.js
