@@ -7,8 +7,8 @@ from scjn_transcripts.models.collector.index import IndexEnum
 class BuscadorJurídicoApiClient:
     session: requests.Session
     ua: str
-    host = CONFIG.extractor.host
-    path_search = CONFIG.extractor.path_search
+    host = CONFIG.collector.host
+    path_search = CONFIG.collector.path_search
 
     def __init__(self):
         self.__init_session()

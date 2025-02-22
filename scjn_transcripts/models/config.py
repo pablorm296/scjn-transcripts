@@ -42,7 +42,7 @@ class CollectorConfig(BaseSettings):
     )
 
 class Config(BaseSettings):
-    extractor: CollectorConfig = CollectorConfig()
+    collector: CollectorConfig = CollectorConfig()
     mongo: MongoConfig = MongoConfig()
 
     model_config = SettingsConfigDict(
