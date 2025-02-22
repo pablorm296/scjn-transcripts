@@ -37,9 +37,14 @@ class CollectorConfig(BaseSettings):
     # Model configuration
     model_config = SettingsConfigDict(
         env_prefix = "EXTRACTOR_",
-        env_file = ".env.local"
+        env_file = ".env.local",
+        extra = "ignore"
     )
 
 class Config(BaseSettings):
     extractor: CollectorConfig = CollectorConfig()
     mongo: MongoConfig = MongoConfig()
+
+    model_config = SettingsConfigDict(
+        extra = "ignore"
+    )
