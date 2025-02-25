@@ -33,6 +33,10 @@ class CollectorConfig(BaseSettings):
     host: str
     # Path to the search endpoint
     path_search: str
+    # Path to get the document details
+    path_document: str
+    # Path to get the print version of the document
+    path_print: str
 
     # Model configuration
     model_config = SettingsConfigDict(
