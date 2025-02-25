@@ -2,7 +2,7 @@ from requests import Response
 from pytest import fixture
 
 from scjn_transcripts.clients.buscador_jurídico import BuscadorJurídicoApiClient
-from scjn_transcripts.models.collector.response import BúsquedaResponse
+from scjn_transcripts.models.collector.response.búsqueda import BúsquedaResponse
 
 @fixture
 def client() -> BuscadorJurídicoApiClient:
