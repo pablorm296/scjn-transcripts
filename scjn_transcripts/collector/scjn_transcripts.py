@@ -1,7 +1,6 @@
 from pymongo import AsyncMongoClient
 from redis import Redis
 from math import ceil
-import base64
 
 from scjn_transcripts.models.collector.response.document import DocumentDetailsResponse
 from scjn_transcripts.clients.buscador_jurídico import BuscadorJurídicoApiClient
