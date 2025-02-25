@@ -9,6 +9,8 @@ class BuscadorJurídicoApiClient:
     ua: str
     host = CONFIG.collector.host
     path_search = CONFIG.collector.path_search
+    path_document = CONFIG.collector.path_document
+    path_print = CONFIG.collector.path_print
 
     def __init__(self):
         self.__init_session()
@@ -41,6 +43,26 @@ class BuscadorJurídicoApiClient:
 
         response = self.session.get(
             f"{self.host}{self.path_search}",
+            params = request_params
+        )
+
+        return response
+    
+    def get_documento(self, id: str):
+        response = self.session.get(
+            f"{self.host}{self.path_document}/{id}"
+        )
+
+        return response
+    
+    def get_print(self, file_name: str):
+        
+        request_params = {
+            "fileparams": f"filename:{file_name}"
+        }
+
+        response = self.session.get(
+            f"{self.host}{self.path_print}",
             params = request_params
         )
 
