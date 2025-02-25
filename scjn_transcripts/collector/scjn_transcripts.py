@@ -41,7 +41,8 @@ class ScjnSTranscriptsCollector:
         self.cache_client.set("scjn_transcripts:search_page", page)
 
     def __get_search_page_from_cache(self) -> int:
-        return int(self.cache_client.get("scjn_transcripts:search_page"))
+        page = self.cache_client.get("scjn_transcripts:search_page")
+        return int(page) if page else 1
     
     def __set_document_details_in_cache(self, id: str, digest: str):
         mapping = {
@@ -49,13 +50,13 @@ class ScjnSTranscriptsCollector:
             "digest": digest
         }
 
-        self.cache_client.set(f"scjn_transcripts:document_details:{id}", mapping)
+        self.cache_client.hset(f"scjn_transcripts:document_details:{id}", mapping = mapping)
 
     def __check_document_details_in_cache(self, id: str) -> bool | str:
         exists = self.cache_client.exists(f"scjn_transcripts:document_details:{id}")
 
         if exists:
-            mapping = self.cache_client.get(f"scjn_transcripts:document_details:{id}")
+            mapping = self.cache_client.hgetall(f"scjn_transcripts:document_details:{id}")
             return mapping["digest"]
         
         return False
@@ -88,7 +89,7 @@ class ScjnSTranscriptsCollector:
         return result.modified_count
 
     async def __init_mongo_client(self):
-        self.mongo_client = MongoClientFactory.create()
+        self.mongo_client = await MongoClientFactory.create()
 
     async def connect(self):
         """Connect to DB and cache clients.
@@ -181,7 +182,7 @@ class ScjnSTranscriptsCollector:
                     self.__set_document_details_in_cache(id, parsed_document_response_digest)
                 else:
                     # Save the document in the DB
-                    new_id = await self.__save_document_details_in_db(parsed_document_response_dump)
+                    new_id = await self.__save_document_details_in_db(parsed_document_response)
 
                     # Save the digest in the cache
                     self.__set_document_details_in_cache(id, parsed_document_response_digest)
@@ -206,8 +207,12 @@ class ScjnSTranscriptsCollector:
 
 
 if __name__ == "__main__":
-    collector = ScjnSTranscriptsCollector()
-    collector.connect()
-    result = collector.collect()
-    collector.close()
-    print(result)
+    async def main():
+        collector = ScjnSTranscriptsCollector()
+        await collector.connect()
+        result = await collector.collect()
+        await collector.close()
+        print(result)
+
+    import asyncio
+    asyncio.run(main())
