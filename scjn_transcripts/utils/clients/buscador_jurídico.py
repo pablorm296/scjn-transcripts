@@ -1,5 +1,6 @@
 from requests import Response
 import base64
+import string
 
 def text_is_base64(text: str) -> bool:
     """
@@ -16,18 +17,19 @@ def text_is_base64(text: str) -> bool:
     except Exception:
         return False
     
-def response_is_text(response: Response) -> bool:
+def response_is_text(response: Response, threshold: float = 0.9) -> bool:
     """
-    Check if a given HTTP response contains text content.
+    Check if a given HTTP response contains predominantly text content.
 
     Args:
         response (Response): The HTTP response to check.
+        threshold (float, optional): The minimum ratio of printable characters to total characters
+                                     in the response content to consider it as text. Defaults to 0.9.
 
     Returns:
-        bool: True if the response contains text content, False otherwise.
+        bool: True if the response contains predominantly text content, False otherwise.
     """
-    try:
-        response.text
-        return True
-    except Exception:
-        return False
+    content = response.content[:1024]
+    text_chars = bytes(string.printable, 'utf-8')
+    num_printable_chars = sum(c in text_chars for c in content)
+    return num_printable_chars / len(content) >= threshold
