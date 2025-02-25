@@ -13,7 +13,8 @@ def text_is_base64(text: str) -> bool:
         bool: True if the text is a valid Base64 encoded string, False otherwise.
     """
     try:
-        return base64.b64encode(base64.b64decode(text)) == text
+        decoded_bytes = base64.b64decode(text)
+        return base64.b64encode(decoded_bytes).decode('utf-8') == text
     except Exception:
         return False
     
