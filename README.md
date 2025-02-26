@@ -4,8 +4,9 @@ Este proyecto tiene como objetivo la creación de un corpus de transcripciones e
 
 - [1. Descripción](#1-descripción)
 - [2. Instalación](#2-instalación)
+  - [2.1. Configuración de bases de datos](#21-configuración-de-bases-de-datos)
 - [3. Uso](#3-uso)
-  - [3.1. Infraestructura local](#31-infraestructura-local)
+  - [3.1. Recolección de transcripciones](#31-recolección-de-transcripciones)
 - [4. Detalles técnicos](#4-detalles-técnicos)
   - [4.1. Extracción](#41-extracción)
 - [5. Estado del Proyecto](#5-estado-del-proyecto)
@@ -22,9 +23,39 @@ El proyecto implementa las siguientes características:
 
 ## 2. Instalación
 
+Para instalar este paquete desde el repositorio, puedes usar el siguiente comando:
+
+```bash
+pip install git+https://github.com/pablorm296/scjn-transcripts.git
+```
+
+### 2.1. Configuración de bases de datos
+
+El proyecto utiliza una base de datos MongoDB para almacenar las transcripciones y una base de datos Redis como caché para saber qué documentos ya han sido procesados y poder recuperar el ciclo de extracción en caso de un error inesperado.
+
+Para configurar la conexión a las bases de datos, el proyecto usa un archivo `.env.local`. Puedes encontrar un ejemplo de este archivo en `.env.example`.
+
+Si deseas usar una base de datos local, se incluye un archivo `docker-compose.yml` para configurarlo. Puedes iniciar los servicios de MongoDB y Redis con el siguiente comando:
+
+```bash
+docker-compose up -d
+```
+
+Asegúrate de configurar las variables de entorno en tu archivo `.env.local` para que apunten a las instancias locales de MongoDB y Redis.
+
 ## 3. Uso
 
-### 3.1. Infraestructura local
+### 3.1. Recolección de transcripciones
+
+Para iniciar el proceso de recolección (_scrapping_) de transcripciones, puedes utilizar el comando `collect` proporcionado por la interfaz de línea de comandos (CLI). A continuación se muestra un ejemplo de cómo usar este comando:
+
+```bash
+python -m scjn_transcripts collect --verbose --ignore-page-cache
+```
+
+Opciones disponibles:
+- `--verbose` o `-v`: Aumenta la verbosidad del registro para obtener más detalles durante la ejecución.
+- `--ignore-page-cache` o `-i`: Ignora la caché de la última página solicitada y comienza desde la primera página.
 
 ## 4. Detalles técnicos
 
