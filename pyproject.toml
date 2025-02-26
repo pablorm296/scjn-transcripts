@@ -18,6 +18,8 @@ dependencies = [
     "typer (>=0.15.1,<0.16.0)"
 ]
 
+[project.scripts]
+scjn_transcripts = "scjn_transcripts.cli:app"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
