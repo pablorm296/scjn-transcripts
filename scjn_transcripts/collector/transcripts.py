@@ -21,29 +21,36 @@ class ScjnSTranscriptsCollector:
     mongo_manager: MongoManager
 
     def __init__(self):
+        """Initialize the ScjnSTranscriptsCollector instance."""
         self.__init_client()
 
     def __init_client(self):
+        """Initialize the BuscadorJurídicoApiClient."""
         logger.debug("Initializing BuscadorJurídicoApiClient")
         self.client = BuscadorJurídicoApiClient()
 
     def __init_cache_client(self):
+        """Initialize the Redis cache client and CacheManager."""
         self.cache_client = RedisFactory.create()
         self.cache_manager = CacheManager(self.cache_client)
 
     async def __init_mongo_client(self):
+        """Initialize the MongoDB client and MongoManager."""
         self.mongo_client = await MongoClientFactory.create()
         self.mongo_manager = MongoManager(self.mongo_client)
 
     def __check_cache_client(self):
+        """Check if the cache client is initialized."""
         if self.cache_client is None:
             raise ValueError("Cache client not initialized")
         
     def __check_mongo_client(self):
+        """Check if the MongoDB client is initialized."""
         if self.mongo_client is None:
             raise ValueError("Mongo client not initialized")
         
     def __check_connection_clients(self):
+        """Check if both the cache and MongoDB clients are initialized."""
         self.__check_cache_client()
         self.__check_mongo_client()
 
@@ -79,7 +86,14 @@ class ScjnSTranscriptsCollector:
         self.cache_client.close()
 
     def check_and_set_transcript(self, document_details: DocumentDetailsResponse) -> DocumentDetailsResponse:
+        """Check and set the transcript for a given document.
 
+        Args:
+            document_details (DocumentDetailsResponse): The document details.
+
+        Returns:
+            DocumentDetailsResponse: The updated document details.
+        """
         logger.debug(f"Checking and setting transcript for document {document_details.id}")
 
         if not document_details.contenido and document_details.archivo:
@@ -199,6 +213,7 @@ class ScjnSTranscriptsCollector:
 
 if __name__ == "__main__":
     async def main():
+        """Main entry point for the script."""
         collector = ScjnSTranscriptsCollector()
         await collector.connect()
         result = await collector.collect()
