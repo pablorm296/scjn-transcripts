@@ -34,3 +34,16 @@ def response_is_text(response: Response, threshold: float = 0.9) -> bool:
     text_chars = bytes(string.printable, 'utf-8')
     num_printable_chars = sum(c in text_chars for c in content)
     return num_printable_chars / len(content) >= threshold
+
+def base64_to_text(base64_text: str) -> str:
+    """
+    Convert a Base64 encoded string to text.
+
+    Args:
+        base64_text (str): The Base64 encoded string to convert.
+
+    Returns:
+        str: The decoded text.
+    """
+    decoded_bytes = base64.b64decode(base64_text)
+    return decoded_bytes.decode('utf-8')

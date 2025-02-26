@@ -9,7 +9,7 @@ class DocumentDetailsResponse(BaseModel):
     organo_jurisdiccional: Annotated[OrganoJurisdiccionalEnum, Field(alias = "organoJurisdiccional")]
     contenido: str
     url_video: Annotated[Optional[str], Field(alias = "urlVideo")] = None
-    archivo: str
+    archivo: Optional[str] = None
     id_vt: Annotated[Optional[str], Field(alias = "idVT")] = None
     fecha_sesion: Annotated[str, Field(alias = "fechaSesion")]
     video: Annotated[Optional[str], Field(alias = "video")] = None
