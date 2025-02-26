@@ -7,6 +7,7 @@ Este proyecto tiene como objetivo la creación de un corpus de transcripciones e
 - [3. Uso](#3-uso)
   - [3.1. Infraestructura local](#31-infraestructura-local)
 - [4. Detalles técnicos](#4-detalles-técnicos)
+  - [4.1. Extracción](#41-extracción)
 - [5. Estado del Proyecto](#5-estado-del-proyecto)
 - [6. Contribuciones](#6-contribuciones)
 - [7. Licencia](#7-licencia)
@@ -27,6 +28,38 @@ El proyecto implementa las siguientes características:
 ### 3.1. Infraestructura local
 
 ## 4. Detalles técnicos
+
+### 4.1. Extracción
+
+El proceso de extracción de las versiones estenográficas de la SCJN se implementa en `scjn_transcripts.collector.transcripts`, específicamente en `ScjnSTranscriptsCollector.collect`. A continuación se presenta un diagrama de flujo que detalla el algoritmo de descarga de los documentos:
+
+```mermaid
+graph TD
+    A[Inicio] --> B[Inicializar clientes de DB y cache]
+    B --> C[Obtener página de búsqueda desde cache]
+    C --> D[Inicializar variables del colector]
+    D --> E[Solicitar página de búsqueda]
+    E --> F[Parsear respuesta de búsqueda]
+    F --> G{¿Primera página?}
+    G -- Sí --> H[Establecer total de ítems y páginas]
+    H --> I[Iterar sobre resultados de búsqueda]
+    G -- No --> I[Iterar sobre resultados de búsqueda]
+    I --> J[Obtener detalles del documento]
+    J --> K[Verificar y establecer transcripción]
+    K --> L{¿Documento existe en DB?}
+    L -- No --> M[Guardar documento en DB]
+    M --> N[Guardar digest en cache]
+    N --> S[Incrementar página y solicitudes]
+    L -- Sí --> O{¿Documento ha cambiado?}
+    O -- No --> P[Continuar]
+    P --> S[Incrementar página y solicitudes]
+    O -- Sí --> Q[Actualizar documento en DB]
+    Q --> R[Actualizar digest en cache]
+    R --> S[Incrementar página y solicitudes]
+    S --> T{¿Última página?}
+    T -- No --> E
+    T -- Sí --> U[Fin]
+```
 
 ## 5. Estado del Proyecto
 Este es un trabajo en progreso. Se están desarrollando y probando diferentes estrategias para optimizar la calidad de los datos procesados. Conforme se agreguen nuevas características y mejoras, este README será actualizado.
