@@ -82,7 +82,7 @@ class ScjnSTranscriptsCollector:
 
         self.__check_connection_clients()
 
-        self.mongo_client.close()
+        await self.mongo_client.close()
         self.cache_client.close()
 
     def check_and_set_transcript(self, document_details: DocumentDetailsResponse) -> DocumentDetailsResponse:
