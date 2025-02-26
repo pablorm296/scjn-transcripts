@@ -5,6 +5,7 @@ from math import ceil
 from scjn_transcripts.models.collector.response.document import DocumentDetailsResponse
 from scjn_transcripts.clients.buscador_jurídico import BuscadorJurídicoApiClient
 from scjn_transcripts.models.collector.response.búsqueda import BúsquedaResponse
+from scjn_transcripts.collector.managers import CacheManager, MongoManager
 from scjn_transcripts.utils.mongo import MongoClientFactory
 from scjn_transcripts.utils.redis import RedisFactory
 
@@ -15,6 +16,8 @@ class ScjnSTranscriptsCollector:
     client: BuscadorJurídicoApiClient
     cache_client: Redis | None = None
     mongo_client: AsyncMongoClient | None = None
+    cache_manager: CacheManager
+    mongo_manager: MongoManager
 
     def __init__(self):
         self.__init_client()
@@ -24,6 +27,11 @@ class ScjnSTranscriptsCollector:
 
     def __init_cache_client(self):
         self.cache_client = RedisFactory.create()
+        self.cache_manager = CacheManager(self.cache_client)
+
+    async def __init_mongo_client(self):
+        self.mongo_client = await MongoClientFactory.create()
+        self.mongo_manager = MongoManager(self.mongo_client)
 
     def __check_cache_client(self):
         if self.cache_client is None:
@@ -36,60 +44,6 @@ class ScjnSTranscriptsCollector:
     def __check_connection_clients(self):
         self.__check_cache_client()
         self.__check_mongo_client()
-
-    def __set_search_page_in_cache(self, page: int):
-        self.cache_client.set("scjn_transcripts:search_page", page)
-
-    def __get_search_page_from_cache(self) -> int:
-        page = self.cache_client.get("scjn_transcripts:search_page")
-        return int(page) if page else 1
-    
-    def __set_document_details_in_cache(self, id: str, digest: str):
-        mapping = {
-            "id": id,
-            "digest": digest
-        }
-
-        self.cache_client.hset(f"scjn_transcripts:document_details:{id}", mapping = mapping)
-
-    def __check_document_details_in_cache(self, id: str) -> bool | str:
-        exists = self.cache_client.exists(f"scjn_transcripts:document_details:{id}")
-
-        if exists:
-            mapping = self.cache_client.hgetall(f"scjn_transcripts:document_details:{id}")
-            return mapping["digest"]
-        
-        return False
-    
-    def __check_and_set_transcript(self, document_details: DocumentDetailsResponse) -> DocumentDetailsResponse:
-        # If document_details.contenido is undefined ot empty, it means that the transcript should
-        # be obtained by calling the get_print method. However, we must check the result of the get_print
-        # to see if the returned transcript is text or binary. If it is binary, we must skip the document.
-        if not document_details.contenido:
-            print_response = self.client.get_print(document_details.archivo)
-            is_response_text = clients_utils.response_is_text(print_response)
-
-            if is_response_text:
-                print_text_content = print_response.text
-                is_base64 = clients_utils.text_is_base64(print_text_content)
-
-                document_details.contenido = print_text_content if not is_base64 else clients_utils.base64_to_text(print_text_content)
-
-        return document_details
-    
-    async def __save_document_details_in_db(self, document_details: DocumentDetailsResponse):
-        result = await self.mongo_client.db.transcripts.insert_one(document_details.model_dump())
-        return result.inserted_id
-    
-    async def __patch_document_details_in_db(self, document_details: DocumentDetailsResponse) -> int:
-        result = await self.mongo_client.db.transcripts.update_one(
-            {"id": document_details.id},
-            {"$set": document_details.model_dump()}
-        )
-        return result.modified_count
-
-    async def __init_mongo_client(self):
-        self.mongo_client = await MongoClientFactory.create()
 
     async def connect(self):
         """Connect to DB and cache clients.
@@ -118,6 +72,16 @@ class ScjnSTranscriptsCollector:
         self.mongo_client.close()
         self.cache_client.close()
 
+    def check_and_set_transcript(self, document_details: DocumentDetailsResponse) -> DocumentDetailsResponse:
+        if not document_details.contenido:
+            print_response = self.client.get_print(document_details.archivo)
+            is_response_text = clients_utils.response_is_text(print_response)
+            if is_response_text:
+                print_text_content = print_response.text
+                is_base64 = clients_utils.text_is_base64(print_text_content)
+                document_details.contenido = print_text_content if not is_base64 else clients_utils.base64_to_text(print_text_content)
+        return document_details
+
     async def collect(self):
         """Collect transcripts from the SCJN website.
 
@@ -131,7 +95,7 @@ class ScjnSTranscriptsCollector:
         self.__check_connection_clients()
 
         # Get the search page from the cache
-        page = self.__get_search_page_from_cache()
+        page = self.cache_manager.get_search_page()
         
         # Init collector variables
         page_size = 20
@@ -161,13 +125,13 @@ class ScjnSTranscriptsCollector:
                 parsed_document_response = DocumentDetailsResponse(**document_response.json())
 
                 # Check and set the transcript
-                parsed_document_response = self.__check_and_set_transcript(parsed_document_response)
+                parsed_document_response = self.check_and_set_transcript(parsed_document_response)
 
                 parsed_document_response_dump = parsed_document_response.model_dump()
                 parsed_document_response_digest = digest_utils.get_digest(parsed_document_response_dump)
 
                 # Get the document digest from the cache
-                digest = self.__check_document_details_in_cache(id)
+                digest = self.cache_manager.check_document_details(id)
 
                 if digest:
                     # Check if the document has changed
@@ -176,16 +140,16 @@ class ScjnSTranscriptsCollector:
                         continue
 
                     # If the document has changed, patch it
-                    patched += await self.__patch_document_details_in_db(parsed_document_response_dump)
+                    patched += await self.mongo_manager.patch_document_details(parsed_document_response_dump)
 
                     # Update the digest in the cache
-                    self.__set_document_details_in_cache(id, parsed_document_response_digest)
+                    self.cache_manager.set_document_details(id, parsed_document_response_digest)
                 else:
                     # Save the document in the DB
-                    new_id = await self.__save_document_details_in_db(parsed_document_response)
+                    new_id = await self.mongo_manager.save_document_details(parsed_document_response)
 
                     # Save the digest in the cache
-                    self.__set_document_details_in_cache(id, parsed_document_response_digest)
+                    self.cache_manager.set_document_details(id, parsed_document_response_digest)
 
                     saved += 1
                 
@@ -197,7 +161,7 @@ class ScjnSTranscriptsCollector:
                 break
 
             # Set the search page in the cache
-            self.__set_search_page_in_cache(page)
+            self.cache_manager.set_search_page(page)
 
         return {
             "total_items": total_items,
