@@ -118,7 +118,7 @@ class ScjnSTranscriptsCollector:
             
         return document_details
 
-    async def collect(self):
+    async def collect(self, ignore_page_cache: bool = False) -> dict:
         """Collect transcripts from the SCJN website.
 
         This method collects transcripts from the SCJN website and stores
@@ -131,7 +131,10 @@ class ScjnSTranscriptsCollector:
         self.__check_connection_clients()
 
         # Get the search page from the cache
-        page = self.cache_manager.get_search_page()
+        if not ignore_page_cache:
+            page = self.cache_manager.get_search_page()
+        else:
+            page = 1
         
         # Init collector variables
         page_size = 20
