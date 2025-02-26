@@ -1,6 +1,6 @@
 import requests
 
-from scjn_transcripts.utils.clients.buscador_jurídico import response_is_text, text_is_base64
+from scjn_transcripts.utils.requests import response_is_text, text_is_base64
 
 def test_response_is_not_text():
     URL_WITH_A_BINARY_FILE = "https://github.com/Qix-/test-binary-file/raw/refs/heads/master/blah.bin"

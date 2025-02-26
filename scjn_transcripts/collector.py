@@ -8,7 +8,7 @@ from scjn_transcripts.models.collector.response.búsqueda import BúsquedaRespon
 from scjn_transcripts.utils.mongo import MongoClientFactory
 from scjn_transcripts.utils.redis import RedisFactory
 
-import scjn_transcripts.utils.clients.buscador_jurídico as clients_utils
+import scjn_transcripts.utils.requests as clients_utils
 import scjn_transcripts.utils.digest as digest_utils
 
 class ScjnSTranscriptsCollector:
