@@ -19,7 +19,6 @@ El proyecto tiene como objetivo principal la creación de un corpus de transcrip
 El proyecto implementa las siguientes características:
 1. Extracción de transcripciones de la SCJN: Se extraen las transcripciones de las sesiones de la SCJN usando la API del buscador jurídico de la SCJN.
 2. Limpieza de transcripciones: Su contenido se almacena en texto plano, usando Markdown para facilitar su lectura y análisis.
-3. Estandarización de transcripciones: Se estandarizan los metadatos de las transcripciones, como la fecha de la sesión y el número de sesión, para facilitar su análisis y exploración.
 
 ## 2. Instalación
 
