@@ -1,9 +1,9 @@
 from requests.adapters import HTTPAdapter, Retry
-import requests
 import ua_generator
+import requests
 
-from scjn_transcripts.config import CONFIG
 from scjn_transcripts.models.collector.index import IndexEnum
+from scjn_transcripts.config import CONFIG
 
 class BuscadorJurídicoApiClient:
     session: requests.Session
