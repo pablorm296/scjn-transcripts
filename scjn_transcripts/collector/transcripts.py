@@ -203,7 +203,7 @@ class ScjnSTranscriptsCollector:
             page += 1
 
             # Check if we've reached the total pages
-            if requests >= total_pages:
+            if page > total_pages:
                 logger.info("Reached the last page")
                 break
 
@@ -215,16 +215,3 @@ class ScjnSTranscriptsCollector:
             "saved": saved,
             "patched": patched
         }
-
-
-if __name__ == "__main__":
-    async def main():
-        """Main entry point for the script."""
-        collector = ScjnSTranscriptsCollector()
-        await collector.connect()
-        result = await collector.collect()
-        await collector.close()
-        print(result)
-
-    import asyncio
-    asyncio.run(main())
