@@ -50,7 +50,7 @@ Asegúrate de configurar las variables de entorno en tu archivo `.env.local` par
 Para iniciar el proceso de recolección (_scrapping_) de transcripciones, puedes utilizar el comando `collect` proporcionado por la interfaz de línea de comandos (CLI). A continuación se muestra un ejemplo de cómo usar este comando:
 
 ```bash
-python -m scjn_transcripts collect --verbose --ignore-page-cache
+scjn_transcripts collect --verbose --ignore-page-cache
 ```
 
 Opciones disponibles:
