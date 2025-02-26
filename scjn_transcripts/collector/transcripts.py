@@ -82,7 +82,7 @@ class ScjnSTranscriptsCollector:
 
         logger.debug(f"Checking and setting transcript for document {document_details.id}")
 
-        if not document_details.contenido:
+        if not document_details.contenido and document_details.archivo:
             logger.info(f"Document {document_details.id} has no transcript. Trying to get it from the file endpoint")
             print_response = self.client.get_print(document_details.archivo)
             is_response_text = clients_utils.response_is_text(print_response)
@@ -92,6 +92,10 @@ class ScjnSTranscriptsCollector:
                 document_details.contenido = print_text_content if not is_base64 else clients_utils.base64_to_text(print_text_content)
             else:
                 logger.warning(f"Document {document_details.id} has a binary file. Transcript cannot be extracted")
+
+        elif not document_details.contenido and not document_details.archivo:
+            logger.warning(f"Document {document_details.id} has no transcript and no file. Transcript cannot be extracted")
+            
         return document_details
 
     async def collect(self):
