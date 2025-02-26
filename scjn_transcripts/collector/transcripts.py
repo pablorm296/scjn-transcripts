@@ -99,6 +99,12 @@ class ScjnSTranscriptsCollector:
         if not document_details.contenido and document_details.archivo:
             logger.info(f"Document {document_details.id} has no transcript. Trying to get it from the file endpoint")
             print_response = self.client.get_print(document_details.archivo)
+
+            # Check if the response is empty
+            if len(print_response.content) == 0:
+                logger.warning(f"Document {document_details.id} has an empty transcript")
+                return document_details
+
             is_response_text = clients_utils.response_is_text(print_response)
             if is_response_text:
                 print_text_content = print_response.text
