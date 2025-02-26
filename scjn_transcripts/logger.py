@@ -10,7 +10,7 @@ logger.setLevel(logging.INFO)
 console_handler = logging.StreamHandler()
 
 # Create a formatter and add it to the handler
-formatter = logging.Formatter("%(asctime)s, %(levelname)8s, %(message)s, %(module)s")
+formatter = logging.Formatter("%(asctime)s | %(levelname)8s | %(message)s | %(module)s")
 
 # Set the formatter for the handler
 console_handler.setFormatter(formatter)
