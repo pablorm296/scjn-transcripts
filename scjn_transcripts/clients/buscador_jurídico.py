@@ -56,14 +56,20 @@ class BuscadorJurídicoApiClient:
 
         response = self.session.get(
             f"{self.host}{self.path_search}",
-            params = request_params
+            params = request_params,
+            headers = {
+                "Referer": f"{self.host}/busqueda?q={request_params['q']}&indice={request_params['indice']}"
+            }
         )
 
         return response
     
     def get_documento(self, id: str):
         response = self.session.get(
-            f"{self.host}{self.path_document}/{id}"
+            f"{self.host}{self.path_document}/{id}",
+            headers = {
+                "Referer": f"{self.host}/doc/vtaquigraficas/{id}/*"
+            }
         )
 
         return response
@@ -71,12 +77,15 @@ class BuscadorJurídicoApiClient:
     def get_print(self, file_name: str):
         
         request_params = {
-            "fileparams": f"filename:{file_name}"
+            "fileparams": f"filename:{file_name}",
         }
 
         response = self.session.get(
             f"{self.host}{self.path_print}",
-            params = request_params
+            params = request_params,
+            headers = {
+                "Referer": f"{self.host}/doc/vtaquigraficas/{id}/*"
+            }
         )
 
         return response
