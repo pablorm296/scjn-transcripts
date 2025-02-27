@@ -3,13 +3,14 @@ from redis import Redis
 
 import scjn_transcripts.collector.managers as collector_managers
 import scjn_transcripts.cleaner.managers as cleaner_managers
+import scjn_transcripts.io.managers as io_managers
 
 from scjn_transcripts.utils.mongo import MongoClientFactory
 from scjn_transcripts.utils.redis import RedisFactory
 from scjn_transcripts.logger import logger
 
-type CacheManagerType = collector_managers.CacheManager | cleaner_managers.CacheManager
-type MongoManagerType = collector_managers.MongoManager | cleaner_managers.MongoManager
+type CacheManagerType = collector_managers.CacheManager | cleaner_managers.CacheManager | io_managers.CacheManager
+type MongoManagerType = collector_managers.MongoManager | cleaner_managers.MongoManager | io_managers.MongoManager
 
 class BaseDataHandler:
     cache_client: Redis | None = None
