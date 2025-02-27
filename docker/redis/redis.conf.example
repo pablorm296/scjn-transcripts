@@ -1,0 +1,27 @@
+# Redis configuration file example
+
+# General settings
+bind 0.0.0.0
+protected-mode yes
+port 6379
+tcp-backlog 511
+timeout 0
+tcp-keepalive 300
+
+# Security settings
+requirepass password
+
+# Logging
+loglevel notice
+logfile ""
+
+# Snapshotting
+save 900 1
+save 300 10
+save 60 10000
+
+# Append only mode
+appendonly no
+
+# Other settings
+databases 16

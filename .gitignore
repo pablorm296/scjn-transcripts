@@ -42,3 +42,19 @@ ipython_config.py
 
 # Project Misc ================================================================
 
+# Ignore prototype output files
+prototypes/output
+
+# Ignore local environment files
+.env.local
+
+# Local infrastructure ========================================================
+
+# Ignore data volumes
+docker/**/data
+
+# Ignore mongo init scripts
+docker/mongo/scripts/init.js
+
+# Ignore redis config
+docker/redis/redis.conf

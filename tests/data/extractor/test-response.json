@@ -1,0 +1,241 @@
+{
+    "total": 3725,
+    "entidades": [
+        {
+            "entidad": "vtaquigraficas",
+            "resultados": 3725
+        },
+        {
+            "entidad": "sentencias_pub",
+            "resultados": 0
+        },
+        {
+            "entidad": "votos",
+            "resultados": 0
+        },
+        {
+            "entidad": "tesis",
+            "resultados": 0
+        },
+        {
+            "entidad": "acuerdos",
+            "resultados": 0
+        },
+        {
+            "entidad": "protocolos_actuacion_dh",
+            "resultados": 0
+        },
+        {
+            "entidad": "suniversal",
+            "resultados": 0
+        },
+        {
+            "entidad": "bjdh_coidh",
+            "resultados": 0
+        },
+        {
+            "entidad": "cidh",
+            "resultados": 0
+        },
+        {
+            "entidad": "hudoc",
+            "resultados": 0
+        },
+        {
+            "entidad": "legislacion",
+            "resultados": 0
+        },
+        {
+            "entidad": "biblioteca",
+            "resultados": 0
+        },
+        {
+            "entidad": "cij",
+            "resultados": 0
+        },
+        {
+            "entidad": "tcespanol",
+            "resultados": 0
+        },
+        {
+            "entidad": "cccolombia",
+            "resultados": 0
+        },
+        {
+            "entidad": "tcchile",
+            "resultados": 0
+        },
+        {
+            "entidad": "csjnargentina",
+            "resultados": 0
+        },
+        {
+            "entidad": "ccj_cursos",
+            "resultados": 0
+        },
+        {
+            "entidad": "telectoral",
+            "resultados": 0
+        }
+    ],
+    "resultados": [
+        {
+            "organoJurisdiccional": "Primera Sala",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 0,
+            "idVT": "20521",
+            "extractos": {},
+            "fechaSesion": "19/02/2025",
+            "id": "R-KWJJUBRqKfB97KYRqN",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Segunda Sala",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 1,
+            "idVT": "16032",
+            "extractos": {},
+            "fechaSesion": "19/02/2025",
+            "id": "TOKWJJUBRqKfB97KYhq1",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Pleno",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 2,
+            "idVT": "47403",
+            "extractos": {},
+            "fechaSesion": "18/02/2025",
+            "id": "abtGH5UBRqKfB97K90yy",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Pleno",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 3,
+            "idVT": "47383",
+            "extractos": {},
+            "fechaSesion": "17/02/2025",
+            "id": "gY6_GZUBRqKfB97K_71J",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Pleno",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 4,
+            "idVT": "47373",
+            "extractos": {},
+            "fechaSesion": "13/02/2025",
+            "id": "8RmlBZUBRqKfB97Kzb7y",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Primera Sala",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 5,
+            "idVT": "20511",
+            "extractos": {},
+            "fechaSesion": "12/02/2025",
+            "id": "SvUZAJUBRqKfB97KF-cP",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Segunda Sala",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 6,
+            "idVT": "16022",
+            "extractos": {},
+            "fechaSesion": "12/02/2025",
+            "id": "M_UZAJUBRqKfB97KFOcC",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Pleno",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 7,
+            "idVT": "47363",
+            "extractos": {},
+            "fechaSesion": "11/02/2025",
+            "id": "oRhwBZUBRqKfB97KhkPY",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Pleno",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 8,
+            "idVT": "47353",
+            "extractos": {},
+            "fechaSesion": "10/02/2025",
+            "id": "q7W69ZQBRqKfB97KVZop",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        },
+        {
+            "organoJurisdiccional": "Pleno",
+            "instancia": "Suprema Corte de Justicia de la Nación",
+            "pos": 9,
+            "idVT": "47343",
+            "extractos": {},
+            "fechaSesion": "06/02/2025",
+            "id": "AjNB4ZQBRqKfB97K1I3u",
+            "type": "vtaquigraficas",
+            "anio": 2025
+        }
+    ],
+    "ids": [
+        {
+            "id": "R-KWJJUBRqKfB97KYRqN",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "TOKWJJUBRqKfB97KYhq1",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "abtGH5UBRqKfB97K90yy",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "gY6_GZUBRqKfB97K_71J",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "8RmlBZUBRqKfB97Kzb7y",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "SvUZAJUBRqKfB97KF-cP",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "M_UZAJUBRqKfB97KFOcC",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "oRhwBZUBRqKfB97KhkPY",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "q7W69ZQBRqKfB97KVZop",
+            "type": "vtaquigraficas"
+        },
+        {
+            "id": "AjNB4ZQBRqKfB97K1I3u",
+            "type": "vtaquigraficas"
+        }
+    ],
+    "didyoumean": [],
+    "pagina": 1,
+    "size": 10,
+    "from": 1,
+    "qTranslate": "*",
+    "fromTo": 10
+}
