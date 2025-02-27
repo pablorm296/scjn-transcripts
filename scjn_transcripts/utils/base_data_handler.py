@@ -16,9 +16,13 @@ class BaseDataHandler:
     mongo_client: AsyncMongoClient | None = None
     cache_manager: CacheManagerType
     mongo_manager: MongoManagerType
+    cache_manager_class: CacheManagerType
+    mongo_manager_class: MongoManagerType
 
-    def __init__(self):
-        pass
+    def __init__(self, cache_manager_class: CacheManagerType, mongo_manager_class: MongoManagerType):
+        """Initialize the BaseDataHandler instance."""
+        self.cache_manager_class = cache_manager_class
+        self.mongo_manager_class = mongo_manager_class
 
     def __init_cache_client(self):
         """Initialize the Redis cache client."""
@@ -56,8 +60,10 @@ class BaseDataHandler:
         logger.debug("Connecting to DB and cache clients")
         await self.__init_mongo_client()
         self.__init_cache_client()
-        self.__init_cache_manager()
-        self.__init_mongo_manager()
+
+        logger.debug("Initializing cache and DB managers")
+        self.__init_cache_manager(self.cache_manager_class)
+        self.__init_mongo_manager(self.mongo_manager_class)
 
     async def close(self):
         """Close the connection to the DB and cache clients."""
