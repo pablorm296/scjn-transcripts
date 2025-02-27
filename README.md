@@ -202,7 +202,7 @@ Este es un trabajo en progreso. A continuación se listan las características d
 
 ### Por implementar
 - [ ] 📥 **Población de la base de datos a partir de archivos markdown**: Permitir la carga de transcripciones en la base de datos a partir de archivos Markdown existentes.
-- [ ] 🤖 **RAG**: Implementar un sistema de Recuperación de Información (RAG) para interactuar con su contenido.
+- [ ] 🤖 **RAG**: Implementar un sistema de generación de texto mejorada por recuperación para interactuar con las transcripciones.
 
 Conforme se agreguen nuevas características y mejoras, este README será actualizado.
 
