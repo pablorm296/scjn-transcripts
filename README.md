@@ -13,6 +13,8 @@ Este proyecto tiene como objetivo la creación de un corpus de transcripciones e
   - [4.1. Extracción](#41-extracción)
   - [4.2. Limpieza](#42-limpieza)
 - [5. Estado del Proyecto](#5-estado-del-proyecto)
+  - [Implementadas](#implementadas)
+  - [Por implementar](#por-implementar)
 - [6. Contribuciones](#6-contribuciones)
 - [7. Licencia](#7-licencia)
 
@@ -189,7 +191,20 @@ graph TD
 ```
 
 ## 5. Estado del Proyecto
-Este es un trabajo en progreso. Se están desarrollando y probando diferentes estrategias para optimizar la calidad de los datos procesados. Conforme se agreguen nuevas características y mejoras, este README será actualizado.
+
+Este es un trabajo en progreso. A continuación se listan las características del proyecto:
+
+### Implementadas
+- [x] 🕵️‍♂️ **Scrapping de transcripciones a partir del buscador jurídico de la SCJN**: Se extraen las transcripciones de las sesiones de la SCJN usando la API del buscador jurídico.
+- [x] 💾 **Almacenamiento de las transcripciones en una base de datos**: Las transcripciones se almacenan en una base de datos MongoDB.
+- [x] 🧹 **Limpieza de transcripciones en base de datos**: Se limpian las transcripciones almacenadas en la base de datos para facilitar su análisis.
+- [x] 📄 **Generación de archivos a partir del contenido de la base de datos**: Se generan archivos de transcripciones en formato Markdown a partir de los datos almacenados.
+
+### Por implementar
+- [ ] 📥 **Población de la base de datos a partir de archivos markdown**: Permitir la carga de transcripciones en la base de datos a partir de archivos Markdown existentes.
+- [ ] 🤖 **RAG**: Implementar un sistema de Recuperación de Información (RAG) para interactuar con su contenido.
+
+Conforme se agreguen nuevas características y mejoras, este README será actualizado.
 
 ## 6. Contribuciones
 Por el momento, el proyecto es de uso personal, pero en el futuro podrían abrirse oportunidades para contribuciones externas.
