@@ -8,6 +8,7 @@ Este proyecto tiene como objetivo la creación de un corpus de transcripciones e
 - [3. Uso](#3-uso)
   - [3.1. Recolección de transcripciones](#31-recolección-de-transcripciones)
   - [3.2. Limpieza de transcripciones](#32-limpieza-de-transcripciones)
+  - [3.3. Generación de archivos](#33-generación-de-archivos)
 - [4. Detalles técnicos](#4-detalles-técnicos)
   - [4.1. Extracción](#41-extracción)
   - [4.2. Limpieza](#42-limpieza)
@@ -47,6 +48,14 @@ Asegúrate de configurar las variables de entorno en tu archivo `.env.local` par
 
 ## 3. Uso
 
+Este proyecto proporciona una interfaz de línea de comandos (CLI) para facilitar la recolección, limpieza y generación de archivos de transcripciones. Puedes acceder a la interfaz de línea de comandos ejecutando el comando `transcripts` en tu terminal.
+
+Para obtener una lista de comandos disponibles, simplement usa la opción `--help`:
+
+```bash
+transcripts --help
+```
+
 ### 3.1. Recolección de transcripciones
 
 Para iniciar el proceso de recolección (_scrapping_) de transcripciones, puedes utilizar el comando `collect` proporcionado por la interfaz de línea de comandos (CLI). A continuación se muestra un ejemplo de cómo usar este comando:
@@ -69,6 +78,28 @@ transcripts clean --verbose
 
 Opciones disponibles:
 - `--verbose` o `-v`: Aumenta la verbosidad del registro para obtener más detalles durante la ejecución.
+
+### 3.3. Generación de archivos
+
+Para iniciar el proceso de generación de archivos de transcripciones, puedes utilizar el comando `dump` proporcionado por la interfaz de línea de comandos (CLI). A continuación se muestra un ejemplo de cómo usar este comando:
+
+```bash
+transcripts dump /ruta/a/directorio --verbose
+```
+
+Opciones disponibles:
+- `--verbose` o `-v`: Aumenta la verbosidad del registro para obtener más detalles durante la ejecución.
+
+Los documentos generados incluyen un frontmatter (delimitado por tres guiones medios al inicio del documento) con metadata relevante de la transcripción, como se muestra a continuación:
+
+```markdown
+---
+title: "Título de la Transcripción"
+date: "Fecha de la Transcripción"
+session: "Número de Sesión"
+---
+Contenido de la transcripción...
+```
 
 ## 4. Detalles técnicos
 
