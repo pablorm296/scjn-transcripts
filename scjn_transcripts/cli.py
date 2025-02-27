@@ -32,6 +32,7 @@ def collect(
 @app.command()
 def clean(
     verbose: Annotated[bool, typer.Option("--verbose", "-v", help = "Increase verbosity")] = False,
+    ignore_cache: Annotated[bool, typer.Option("--ignore-cache", "-i", help = "Ignore the cache and clean all transcripts")] = False
 ):
     """Start the cleaning process."""
     if verbose:
@@ -40,7 +41,7 @@ def clean(
     async def main():
         cleaner = ScjnSTranscriptsCleaner()
         await cleaner.connect()
-        result = await cleaner.clean()
+        result = await cleaner.clean(ignore_cache = ignore_cache)
         await cleaner.close()
         
         logger.info(f"Cleaned {result} transcripts")

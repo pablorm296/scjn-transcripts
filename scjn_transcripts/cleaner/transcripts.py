@@ -58,7 +58,7 @@ class ScjnSTranscriptsCleaner(BaseDataHandler):
 
         return Transcript(**new_transcript)
     
-    async def clean(self):
+    async def clean(self, ignore_cache: bool = False) -> dict:
 
         # Check that the DB and cache clients are connected
         self._check_connection_clients()
@@ -77,7 +77,7 @@ class ScjnSTranscriptsCleaner(BaseDataHandler):
             logger.info(f"Cleaning document {document.id}")
 
             # Check if the document has already been cleaned
-            if self.cache_manager.document_is_cleaned(document.id):
+            if self.cache_manager.document_is_cleaned(document.id) and not ignore_cache:
                 logger.info(f"Document {document.id} has already been cleaned. Skipping")
                 continue
 
