@@ -1,5 +1,3 @@
-from pymongo import AsyncMongoClient
-from redis import Redis
 from math import ceil
 
 from scjn_transcripts.models.collector.response.document import DocumentDetailsResponse

@@ -1,6 +1,4 @@
-from pymongo import AsyncMongoClient
 from markdownify import markdownify
-from redis import Redis
 import datetime
 import re
 
