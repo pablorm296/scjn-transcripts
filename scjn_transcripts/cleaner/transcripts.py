@@ -24,7 +24,7 @@ class ScjnSTranscriptsCleaner(BaseDataHandler):
         # Two or more newlines are replaced with two newlines.
         
         # Regex for two or more spaces
-        result = re.sub(r" {2,}", " ", result)
+        result = re.sub(r" {2,}", " ", text)
 
         # Regex for two or more newlines
         result = re.sub(r"\n{2,}", "\n\n", result)
@@ -44,11 +44,11 @@ class ScjnSTranscriptsCleaner(BaseDataHandler):
             "contenido": document_details.contenido,
             "url_video": document_details.url_video,
             "url_documento": document_details.url_vt,
-            "asuntos": [asunto["num_expediente"] for asunto in document_details.asuntos] if document_details.asuntos else None
+            "asuntos": [asunto.num_expediente for asunto in document_details.asuntos] if document_details.asuntos else None
         }
 
         date_day = document_details.dia
-        date_month = document_details.mes["numero"]
+        date_month = document_details.mes.numero
         date_year = document_details.anio
 
         new_transcript["fecha_sesión"] = datetime.datetime(date_year, date_month, date_day)
