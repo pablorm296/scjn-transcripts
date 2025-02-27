@@ -5,76 +5,14 @@ import datetime
 import re
 
 from scjn_transcripts.models.collector.response.document import DocumentDetailsResponse
-from scjn_transcripts.cleaner.managers import CacheManager, MongoManager
+from scjn_transcripts.utils.base_data_handler import BaseDataHandler
 from scjn_transcripts.models.cleaner.transcript import Transcript
-from scjn_transcripts.utils.mongo import MongoClientFactory
-from scjn_transcripts.utils.redis import RedisFactory
 from scjn_transcripts.logger import logger
 
-class ScjnSTranscriptsCleaner:
-    cache_client: Redis | None = None
-    mongo_client: AsyncMongoClient | None = None
-    cache_manager: CacheManager
-    mongo_manager: MongoManager
+class ScjnSTranscriptsCleaner(BaseDataHandler):
 
     def __init__(self):
-        pass
-
-    def __init_cache_client(self):
-        """Initialize the Redis cache client and CacheManager."""
-        self.cache_client = RedisFactory.create()
-        self.cache_manager = CacheManager(self.cache_client)
-
-    async def __init_mongo_client(self):
-        """Initialize the MongoDB client and MongoManager."""
-        self.mongo_client = await MongoClientFactory.create()
-        self.mongo_manager = MongoManager(self.mongo_client)
-
-    def __check_cache_client(self):
-        """Check if the cache client is initialized."""
-        if self.cache_client is None:
-            raise ValueError("Cache client not initialized")
-        
-    def __check_mongo_client(self):
-        """Check if the MongoDB client is initialized."""
-        if self.mongo_client is None:
-            raise ValueError("Mongo client not initialized")
-        
-    def __check_connection_clients(self):
-        """Check if both the cache and MongoDB clients are initialized."""
-        self.__check_cache_client()
-        self.__check_mongo_client()
-
-    async def connect(self):
-        """Connect to DB and cache clients.
-
-        This method should be called before any other method that requires
-        a connection to the DB or cache.
-
-        This method should be called only once, as it initializes the
-        DB and cache clients.
-
-        This implementation is a workaround to the fact that the
-        __init__ method cannot be async.
-        """
-
-        logger.debug("Connecting to DB and cache clients")
-
-        await self.__init_mongo_client()
-        self.__init_cache_client()
-
-    async def close(self):
-        """Close the connection to the DB and cache clients.
-
-        This method should be called when the application is shutting down.
-        """
-
-        logger.debug("Closing DB and cache clients")
-
-        self.__check_connection_clients()
-
-        await self.mongo_client.close()
-        self.cache_client.close()
+        super().__init__()
 
     def clean_text(self, text: str) -> str:
         """Clean the text of a transcript.
