@@ -19,11 +19,7 @@ class ScjnSTranscriptsCleaner(BaseDataHandler):
         This method should be called before saving the transcript to the DB.
         """
 
-        # First, remove the HTML tags from the text, using markdown to keep the
-        # text formatting.
-        result = markdownify(text)
-
-        # Now, remove excess whitespace from the text.
+        # First, remove excess whitespace from the text.
         # Double spaces are replaced with single spaces.
         # Two or more newlines are replaced with two newlines.
         
@@ -32,6 +28,10 @@ class ScjnSTranscriptsCleaner(BaseDataHandler):
 
         # Regex for two or more newlines
         result = re.sub(r"\n{2,}", "\n\n", result)
+
+        # Then, remove the HTML tags from the text, using markdown to keep the
+        # text formatting.
+        result = markdownify(text)
 
         return result
     
