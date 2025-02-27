@@ -1,89 +1,27 @@
-from pymongo import AsyncMongoClient
-from redis import Redis
 from math import ceil
 
 from scjn_transcripts.models.collector.response.document import DocumentDetailsResponse
 from scjn_transcripts.clients.buscador_jurídico import BuscadorJurídicoApiClient
 from scjn_transcripts.models.collector.response.búsqueda import BúsquedaResponse
 from scjn_transcripts.collector.managers import CacheManager, MongoManager
-from scjn_transcripts.utils.mongo import MongoClientFactory
-from scjn_transcripts.utils.redis import RedisFactory
+from scjn_transcripts.utils.base_data_handler import BaseDataHandler
 from scjn_transcripts.logger import logger
 
 import scjn_transcripts.utils.requests as clients_utils
 import scjn_transcripts.utils.digest as digest_utils
 
-class ScjnSTranscriptsCollector:
+class ScjnSTranscriptsCollector(BaseDataHandler):
     client: BuscadorJurídicoApiClient
-    cache_client: Redis | None = None
-    mongo_client: AsyncMongoClient | None = None
-    cache_manager: CacheManager
-    mongo_manager: MongoManager
 
     def __init__(self):
         """Initialize the ScjnSTranscriptsCollector instance."""
+        super().__init__(CacheManager, MongoManager)
         self.__init_client()
 
     def __init_client(self):
         """Initialize the BuscadorJurídicoApiClient."""
         logger.debug("Initializing BuscadorJurídicoApiClient")
         self.client = BuscadorJurídicoApiClient()
-
-    def __init_cache_client(self):
-        """Initialize the Redis cache client and CacheManager."""
-        self.cache_client = RedisFactory.create()
-        self.cache_manager = CacheManager(self.cache_client)
-
-    async def __init_mongo_client(self):
-        """Initialize the MongoDB client and MongoManager."""
-        self.mongo_client = await MongoClientFactory.create()
-        self.mongo_manager = MongoManager(self.mongo_client)
-
-    def __check_cache_client(self):
-        """Check if the cache client is initialized."""
-        if self.cache_client is None:
-            raise ValueError("Cache client not initialized")
-        
-    def __check_mongo_client(self):
-        """Check if the MongoDB client is initialized."""
-        if self.mongo_client is None:
-            raise ValueError("Mongo client not initialized")
-        
-    def __check_connection_clients(self):
-        """Check if both the cache and MongoDB clients are initialized."""
-        self.__check_cache_client()
-        self.__check_mongo_client()
-
-    async def connect(self):
-        """Connect to DB and cache clients.
-
-        This method should be called before any other method that requires
-        a connection to the DB or cache.
-
-        This method should be called only once, as it initializes the
-        DB and cache clients.
-
-        This implementation is a workaround to the fact that the
-        __init__ method cannot be async.
-        """
-
-        logger.debug("Connecting to DB and cache clients")
-
-        await self.__init_mongo_client()
-        self.__init_cache_client()
-
-    async def close(self):
-        """Close the connection to the DB and cache clients.
-
-        This method should be called when the application is shutting down.
-        """
-
-        logger.debug("Closing DB and cache clients")
-
-        self.__check_connection_clients()
-
-        await self.mongo_client.close()
-        self.cache_client.close()
 
     def check_and_set_transcript(self, document_details: DocumentDetailsResponse) -> DocumentDetailsResponse:
         """Check and set the transcript for a given document.
@@ -128,7 +66,7 @@ class ScjnSTranscriptsCollector:
         """
 
         # Check that the DB and cache clients are connected
-        self.__check_connection_clients()
+        self._check_connection_clients()
 
         # Get the search page from the cache
         if not ignore_page_cache:
@@ -172,7 +110,7 @@ class ScjnSTranscriptsCollector:
                 # Check and set the transcript
                 parsed_document_response = self.check_and_set_transcript(parsed_document_response)
 
-                parsed_document_response_dump = parsed_document_response.model_dump()
+                parsed_document_response_dump = parsed_document_response.model_dump(by_alias = True)
                 parsed_document_response_digest = digest_utils.get_digest(parsed_document_response_dump)
 
                 # Get the document digest from the cache
@@ -188,7 +126,7 @@ class ScjnSTranscriptsCollector:
                     logger.info(f"Document {id} has changed. Patching it")
 
                     # If the document has changed, patch it
-                    patched += await self.mongo_manager.patch_document_details(parsed_document_response_dump)
+                    patched += await self.mongo_manager.patch_document_details(parsed_document_response)
 
                     # Update the digest in the cache
                     self.cache_manager.set_document_details(id, parsed_document_response_digest)

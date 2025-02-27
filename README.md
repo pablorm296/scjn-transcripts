@@ -7,8 +7,10 @@ Este proyecto tiene como objetivo la creación de un corpus de transcripciones e
   - [2.1. Configuración de bases de datos](#21-configuración-de-bases-de-datos)
 - [3. Uso](#3-uso)
   - [3.1. Recolección de transcripciones](#31-recolección-de-transcripciones)
+  - [3.2. Limpieza de transcripciones](#32-limpieza-de-transcripciones)
 - [4. Detalles técnicos](#4-detalles-técnicos)
   - [4.1. Extracción](#41-extracción)
+  - [4.2. Limpieza](#42-limpieza)
 - [5. Estado del Proyecto](#5-estado-del-proyecto)
 - [6. Contribuciones](#6-contribuciones)
 - [7. Licencia](#7-licencia)
@@ -50,12 +52,23 @@ Asegúrate de configurar las variables de entorno en tu archivo `.env.local` par
 Para iniciar el proceso de recolección (_scrapping_) de transcripciones, puedes utilizar el comando `collect` proporcionado por la interfaz de línea de comandos (CLI). A continuación se muestra un ejemplo de cómo usar este comando:
 
 ```bash
-scjn_transcripts collect --verbose --ignore-page-cache
+transcripts collect --verbose --ignore-page-cache
 ```
 
 Opciones disponibles:
 - `--verbose` o `-v`: Aumenta la verbosidad del registro para obtener más detalles durante la ejecución.
 - `--ignore-page-cache` o `-i`: Ignora la caché de la última página solicitada y comienza desde la primera página.
+
+### 3.2. Limpieza de transcripciones
+
+Para iniciar el proceso de limpieza de transcripciones, puedes utilizar el comando `clean` proporcionado por la interfaz de línea de comandos (CLI). A continuación se muestra un ejemplo de cómo usar este comando:
+
+```bash
+transcripts clean --verbose
+```
+
+Opciones disponibles:
+- `--verbose` o `-v`: Aumenta la verbosidad del registro para obtener más detalles durante la ejecución.
 
 ## 4. Detalles técnicos
 
@@ -89,6 +102,31 @@ graph TD
     S --> T{¿Última página?}
     T -- No --> E
     T -- Sí --> U[Fin]
+```
+
+### 4.2. Limpieza
+
+El proceso de limpieza de las transcripciones se implementa en `scjn_transcripts.cleaner.transcripts`, específicamente en `ScjnSTranscriptsCleaner.clean`. A continuación se presenta un diagrama de flujo que detalla el algoritmo de limpieza de los textos:
+
+```mermaid
+graph TD
+    A[Inicio] --> B[Conectar a DB y cache]
+    B --> C[Obtener documentos de la DB]
+    C --> D[Iterar sobre documentos]
+    D --> E{¿Documento ya limpiado?}
+    E -- Sí --> F[Saltar documento]
+    E -- No --> G[Limpiar texto del documento]
+    G --> H[Eliminar espacios en exceso]
+    H --> I[Eliminar saltos de línea en exceso]
+    I --> J[Convertir HTML a Markdown]
+    J --> K[Construir nuevo objeto Transcript]
+    K --> L[Guardar nuevo Transcript en la DB]
+    L --> M[Actualizar estado de limpieza en cache]
+    M --> N[Incrementar contador de documentos limpiados]
+    F --> O{¿Último documento?}
+    N --> O
+    O -- No --> D
+    O -- Sí --> P[Fin]
 ```
 
 ## 5. Estado del Proyecto

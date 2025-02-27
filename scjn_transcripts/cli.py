@@ -4,6 +4,7 @@ import asyncio
 import typer
 
 from scjn_transcripts.collector.transcripts import ScjnSTranscriptsCollector
+from scjn_transcripts.cleaner.transcripts import ScjnSTranscriptsCleaner
 from scjn_transcripts.logger import logger
 
 app = typer.Typer(no_args_is_help = True)
@@ -24,6 +25,24 @@ def collect(
         await collector.close()
         
         logger.info(f"Collected {result} transcripts")
+
+    asyncio.run(main())
+
+@app.command()
+def clean(
+    verbose: Annotated[bool, typer.Option("--verbose", "-v", help = "Increase verbosity")] = False,
+):
+    """Start the cleaning process."""
+    if verbose:
+        logger.setLevel(logging.DEBUG)
+
+    async def main():
+        cleaner = ScjnSTranscriptsCleaner()
+        await cleaner.connect()
+        result = await cleaner.clean()
+        await cleaner.close()
+        
+        logger.info(f"Cleaned {result} transcripts")
 
     asyncio.run(main())
 
