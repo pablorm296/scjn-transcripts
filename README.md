@@ -43,9 +43,27 @@ pip install .
 
 El proyecto utiliza una base de datos MongoDB para almacenar las transcripciones y una base de datos Redis como caché para saber qué documentos ya han sido procesados y poder recuperar el ciclo de extracción en caso de un error inesperado.
 
-Para configurar la conexión a las bases de datos, el proyecto usa un archivo `.env.local`. Puedes encontrar un ejemplo de este archivo en `.env.example`.
+Primero, copia el contenido del archivo `.env.example` a un nuevo archivo llamado `.env.local`:
 
-Si deseas usar una base de datos local, se incluye un archivo `docker-compose.yml` para configurarlo. Puedes iniciar los servicios de MongoDB y Redis con el siguiente comando:
+```bash
+cp .env.example .env.local
+```
+
+Edita el archivo `.env.local` para configurar los secretos del proyecto según tus necesidades.
+
+Para configurar las instancias de MongoDB y Redis usando Docker, utiliza los archivos de ejemplo proporcionados. Copia el contenido del archivo `docker/mongo/scripts/init.example.js` a un nuevo archivo llamado `init.js` en el mismo directorio:
+
+```bash
+cp docker/mongo/scripts/init.example.js docker/mongo/scripts/init.js
+```
+
+Haz lo mismo con el archivo de configuración de Redis:
+
+```bash
+cp docker/redis/redis.conf.example docker/redis/redis.conf
+```
+
+Luego, levanta los servicios de MongoDB y Redis usando Docker Compose:
 
 ```bash
 docker-compose up -d
