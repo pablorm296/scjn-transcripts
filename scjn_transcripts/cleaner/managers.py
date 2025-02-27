@@ -27,7 +27,7 @@ class CacheManager:
         if not document_details:
             raise ValueError(f"Document with id {id} does not exist in cache")
         
-        self.cache_client.hset(f"scjn_transcripts:document_details:{id}", "cleaned", status)
+        self.cache_client.hset(f"scjn_transcripts:document_details:{id}", "cleaned", int(status))
 
         return status
     
@@ -40,8 +40,9 @@ class MongoManager:
 
     async def get_documents(self, query: dict) -> list[DocumentDetailsResponse]:
         documents = self.db.transcripts.find(query)
-        return [DocumentDetailsResponse(**document) for document in documents]
+        documents = await documents.to_list(length = None)
+        return [DocumentDetailsResponse.model_construct(**document) for document in documents]
     
     async def save_document(self, document: Transcript):
-        result = await self.db.transcripts_clean.insert_one(**document.model_dump())
+        result = await self.db.transcripts_clean.insert_one(document.model_dump())
         return result.inserted_id
