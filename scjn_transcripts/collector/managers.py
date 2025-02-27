@@ -32,7 +32,7 @@ class MongoManager:
 
     def __init__(self, mongo_client: AsyncMongoClient):
         self.mongo_client = mongo_client
-        self.db = mongo_client[CONFIG.mongo.db]
+        self.db = mongo_client[CONFIG.mongo.database]
 
     async def save_document_details(self, document_details: DocumentDetailsResponse):
         result = await self.db.transcripts.insert_one(document_details.model_dump())
