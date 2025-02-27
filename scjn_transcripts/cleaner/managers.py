@@ -41,7 +41,7 @@ class MongoManager:
     async def get_documents(self, query: dict) -> list[DocumentDetailsResponse]:
         documents = self.db.transcripts.find(query)
         documents = await documents.to_list(length = None)
-        return [DocumentDetailsResponse.model_construct(**document) for document in documents]
+        return [DocumentDetailsResponse(**document) for document in documents]
     
     async def save_document(self, document: Transcript):
         result = await self.db.transcripts_clean.insert_one(document.model_dump())
