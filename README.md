@@ -94,9 +94,12 @@ Los documentos generados incluyen un frontmatter (delimitado por tres guiones me
 
 ```markdown
 ---
-title: "Título de la Transcripción"
-date: "Fecha de la Transcripción"
-session: "Número de Sesión"
+id: id del documento
+organo_jurisdiccional: pleno o sala
+url_video: url del vídeo de la sesión
+url_documento: url del PDF de la transcripción
+asuntos: lista de los asuntos tratados en la sesión
+fecha_sesión: fecha de la sesión
 ---
 Contenido de la transcripción...
 ```
