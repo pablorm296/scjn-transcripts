@@ -1,3 +1,4 @@
+from enum import Enum
 import pathlib
 
 from scjn_transcripts.utils.base_data_handler import BaseDataHandler
@@ -28,7 +29,7 @@ class TranscriptIoHandler(BaseDataHandler):
         # Build the frontmatter string
         frontmatter = "---\n"
         for key, value in transcript_dict.items():
-            frontmatter += f"{key}: {value}\n"
+            frontmatter += f"{key}: {value if not isinstance(value, Enum) else value.value}\n"
         frontmatter += "---\n\n"
 
         return frontmatter
@@ -80,7 +81,7 @@ class TranscriptIoHandler(BaseDataHandler):
 
             # The output file name will be the date (YYY-MM-DD) of the transcript, followed by the organo jurisdiccional
             # property of the transcript, then the id property of the transcript, and finally the .md extension
-            file_name = f"{transcript.fecha_sesión.year}-{transcript.fecha_sesión.month:02d}-{transcript.fecha_sesión.day:02d}_{transcript.organo_jurisdiccional}_{transcript.id}.md"
+            file_name = f"{transcript.fecha_sesión.year}-{transcript.fecha_sesión.month:02d}-{transcript.fecha_sesión.day:02d}_{transcript.organo_jurisdiccional.value}_{transcript.id}.md"
             file_path = output_dir_as_path / file_name
 
             # Write the markdown string to the output file
