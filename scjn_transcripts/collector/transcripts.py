@@ -66,7 +66,7 @@ class ScjnSTranscriptsCollector(BaseDataHandler):
         """
 
         # Check that the DB and cache clients are connected
-        self.__check_connection_clients()
+        self._check_connection_clients()
 
         # Get the search page from the cache
         if not ignore_page_cache:

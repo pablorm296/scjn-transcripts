@@ -58,7 +58,7 @@ class ScjnSTranscriptsCleaner(BaseDataHandler):
     async def clean(self):
 
         # Check that the DB and cache clients are connected
-        self.__check_connection_clients()
+        self._check_connection_clients()
 
         # Get all the documents from the DB
         logger.debug("Getting all documents from the DB")
