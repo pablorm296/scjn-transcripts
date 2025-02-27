@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
-scjn_transcripts = "scjn_transcripts.cli:app"
+transcripts = "scjn_transcripts.cli:app"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
