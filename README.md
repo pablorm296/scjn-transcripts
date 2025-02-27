@@ -26,10 +26,17 @@ El proyecto implementa las siguientes características:
 
 ## 2. Instalación
 
-Para instalar este paquete desde el repositorio, puedes usar el siguiente comando:
+Primero, clona el repositorio en tu máquina local:
 
 ```bash
-pip install git+https://github.com/pablorm296/scjn-transcripts.git
+git clone https://github.com/pablorm296/scjn-transcripts.git
+cd scjn-transcripts
+```
+
+Luego, instala el proyecto y sus dependencias usando pip:
+
+```bash
+pip install .
 ```
 
 ### 2.1. Configuración de bases de datos
