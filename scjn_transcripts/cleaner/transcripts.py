@@ -1,4 +1,4 @@
-from markdownify import markdownify
+from markdownify import markdownify, BACKSLASH
 import datetime
 import re
 
@@ -29,9 +29,12 @@ class ScjnSTranscriptsCleaner(BaseDataHandler):
         # Regex for two or more newlines
         result = re.sub(r"\n{2,}", "\n\n", result)
 
-        # Then, remove the HTML tags from the text, using markdown to keep the
-        # text formatting.
-        result = markdownify(text)
+        # The content is in HTML format?
+        # Use regex to check if the text contains HTML tags
+        if re.search(r"<[^>]+>", result):
+            # Then, remove the HTML tags from the text, using markdown to keep the
+            # text formatting.
+            result = markdownify(text, newline_style = BACKSLASH)
 
         return result
     
