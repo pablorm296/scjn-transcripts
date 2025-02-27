@@ -11,7 +11,7 @@ from scjn_transcripts.utils.mongo import MongoClientFactory
 from scjn_transcripts.utils.redis import RedisFactory
 from scjn_transcripts.logger import logger
 
-class ScjnSTranscriptsCollector:
+class ScjnSTranscriptsCleaner:
     cache_client: Redis | None = None
     mongo_client: AsyncMongoClient | None = None
     cache_manager: CacheManager
@@ -76,7 +76,7 @@ class ScjnSTranscriptsCollector:
         await self.mongo_client.close()
         self.cache_client.close()
 
-    def clean_text(text: str) -> str:
+    def clean_text(self, text: str) -> str:
         """Clean the text of a transcript.
 
         This method should be called before saving the transcript to the DB.
@@ -107,11 +107,11 @@ class ScjnSTranscriptsCollector:
             "contenido": document_details.contenido,
             "url_video": document_details.url_video,
             "url_documento": document_details.url_vt,
-            "asuntos": [asunto.num_expediente for asunto in document_details.asuntos],
+            "asuntos": [asunto["num_expediente"] for asunto in document_details.asuntos] if document_details.asuntos else None
         }
 
         date_day = document_details.dia
-        date_month = document_details.mes.numero
+        date_month = document_details.mes["numero"]
         date_year = document_details.anio
 
         new_transcript["fecha_sesión"] = datetime.datetime(date_year, date_month, date_day)
