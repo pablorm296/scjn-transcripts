@@ -1,6 +1,6 @@
 [project]
 name = "scjn-transcripts"
-version = "0.0.0"
+version = "0.1.0"
 description = "Este repositorio almacena el código y los recursos necesarios para la extracción, limpieza y estandarización de las transcripciones estenográficas de las sesiones de la Suprema Corte de Justicia de la Nación (SCJN)."
 authors = [
     {name = "Pablo Reyes",email = "pablo.reyes.moctezuma@gmail.com"}
