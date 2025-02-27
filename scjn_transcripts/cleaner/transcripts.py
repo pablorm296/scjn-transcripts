@@ -3,6 +3,7 @@ import datetime
 import re
 
 from scjn_transcripts.models.collector.response.document import DocumentDetailsResponse
+from scjn_transcripts.cleaner.managers import CacheManager, MongoManager
 from scjn_transcripts.utils.base_data_handler import BaseDataHandler
 from scjn_transcripts.models.cleaner.transcript import Transcript
 from scjn_transcripts.logger import logger
@@ -10,7 +11,7 @@ from scjn_transcripts.logger import logger
 class ScjnSTranscriptsCleaner(BaseDataHandler):
 
     def __init__(self):
-        super().__init__()
+        super().__init__(CacheManager, MongoManager)
 
     def clean_text(self, text: str) -> str:
         """Clean the text of a transcript.
