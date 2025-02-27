@@ -35,12 +35,12 @@ class MongoManager:
         self.db = mongo_client[CONFIG.mongo.database]
 
     async def save_document_details(self, document_details: DocumentDetailsResponse):
-        result = await self.db.transcripts.insert_one(document_details.model_dump())
+        result = await self.db.transcripts.insert_one(document_details.model_dump(by_alias = True))
         return result.inserted_id
 
     async def patch_document_details(self, document_details: DocumentDetailsResponse) -> int:
         result = await self.db.transcripts.update_one(
             {"id": document_details.id},
-            {"$set": document_details.model_dump()}
+            {"$set": document_details.model_dump(by_alias = True)}
         )
         return result.modified_count

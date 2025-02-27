@@ -109,7 +109,7 @@ class ScjnSTranscriptsCollector(BaseDataHandler):
                 # Check and set the transcript
                 parsed_document_response = self.check_and_set_transcript(parsed_document_response)
 
-                parsed_document_response_dump = parsed_document_response.model_dump()
+                parsed_document_response_dump = parsed_document_response.model_dump(by_alias = True)
                 parsed_document_response_digest = digest_utils.get_digest(parsed_document_response_dump)
 
                 # Get the document digest from the cache
@@ -125,7 +125,7 @@ class ScjnSTranscriptsCollector(BaseDataHandler):
                     logger.info(f"Document {id} has changed. Patching it")
 
                     # If the document has changed, patch it
-                    patched += await self.mongo_manager.patch_document_details(parsed_document_response_dump)
+                    patched += await self.mongo_manager.patch_document_details(parsed_document_response)
 
                     # Update the digest in the cache
                     self.cache_manager.set_document_details(id, parsed_document_response_digest)
