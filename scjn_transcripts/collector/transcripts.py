@@ -3,7 +3,7 @@ from math import ceil
 from scjn_transcripts.models.collector.response.document import DocumentDetailsResponse
 from scjn_transcripts.clients.buscador_jurídico import BuscadorJurídicoApiClient
 from scjn_transcripts.models.collector.response.búsqueda import BúsquedaResponse
-from scjn_transcripts.cleaner.managers import CacheManager, MongoManager
+from scjn_transcripts.collector.managers import CacheManager, MongoManager
 from scjn_transcripts.utils.base_data_handler import BaseDataHandler
 from scjn_transcripts.logger import logger
 
